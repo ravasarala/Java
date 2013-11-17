@@ -12,33 +12,63 @@ package SamplePkg;
 
 public class UserValidation 
 {
-	private static char[] symbols = {'!', '@', '#', '$', '%','^','&','*'};
 	
-	public static boolean doValidate(String inputString) {
-		int len = 0;
+	public static boolean doValidate(String inputString) 
+	{
+		char symbols[] = {'!', '@', '#', '$', '%','^','&','*'};
+		int i = 0, len = 0, temp[];
+		temp = new int[256];
+		
 		if(inputString == "") {
 			return false;
 		} else {
-			len = inputString.length();
-			if(len < 8 || len > 8) return false;
+			len = inputString.trim().length();
+			if(len < 8 || len > 8) {
+				System.out.println("Make sure the password has the above mentioned rules with a length of 8, and no white spaces!");
+				return false;
+			}
 		}
-		
-		boolean number_flag = false, uppercase_char_flag = false;
+						
+		while(i < symbols.length) {
+			temp[symbols[i]] = 1;
+			i++;
+		}
+				
+		boolean number_flag = false, uppercase_char_flag = false, symbol_flag = false;
 		char[] c = inputString.toCharArray();
-        for(int i = 0; i < c.length; i++) 
+		int count = 1;
+		i = 0;
+		char first = c[i];
+        
+		for(; i < c.length; i++) 
         {
 			if(c[i] >= '0' && c[i] <= '9')
 				number_flag = true;		
-			
-			if(c[i] >= 'A' && c[i] <= 'Z')
+			else if(c[i] >= 'A' && c[i] <= 'Z')
 				uppercase_char_flag = true;
+			else if(temp[c[i]] == 1)
+				symbol_flag = true;
 			
-			if(symbols[c[i]]
+			if(i + 1 != c.length) 
+			{
+				if(first == c[i+1]) {
+					count++;
+				} else {
+					first = c[i + 1];
+					count = 1;
+				}
+			}
+			
+			if(count > 2) {
+				System.out.println("Characters repeated more than 2 times consequently!");
+				return false;
+			}
 		}
 		        
-        if(number_flag && uppercase_char_flag)
+        if(number_flag && uppercase_char_flag && symbol_flag)
         	return true;
         
+        System.out.println("Either or And - number|uppercase|symbol flag are false!");
 		return false;
 	}
 	
@@ -47,7 +77,7 @@ public class UserValidation
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String str = "abhiguB9";
+		String str = " b8*HggA";
 		System.out.println("doValidate: " + doValidate(str));
 	}
 

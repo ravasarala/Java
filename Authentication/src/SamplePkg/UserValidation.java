@@ -13,13 +13,13 @@ package SamplePkg;
 public class UserValidation 
 {
 	
-	public static boolean doValidate(String inputString) 
+	public static boolean doValidateViaArray(String inputString) 
 	{
 		char symbols[] = {'!', '@', '#', '$', '%','^','&','*'};
 		int i = 0, len = 0, temp[];
 		temp = new int[256];
 		
-		if(inputString == "") {
+		if(inputString == null) {
 			return false;
 		} else {
 			len = inputString.trim().length();
@@ -72,13 +72,24 @@ public class UserValidation
 		return false;
 	}
 	
+	public static boolean doValidateViaHashtable(String str) {
+		//Todo...
+		return false;
+	}
+	
+	public static boolean doValidateViaBytes(String str) {
+		//todo...
+		return false;
+	}
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String str = " b8*HggA";
-		System.out.println("doValidate: " + doValidate(str));
+		System.out.println("doValidateViaArray: " + doValidateViaArray(str));
+		System.out.println("doValidateViaHashtable: " + doValidateViaHashtable(str));
+		System.out.println("doValidateViaBytes: " + doValidateViaBytes(str));
 	}
 
 }
